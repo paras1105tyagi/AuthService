@@ -1,5 +1,5 @@
 const { EmptyResultError } = require("sequelize");
-const { User } = require("../models/index");
+const { User,Role } = require("../models/index");
 
 class UserRepository {
   async create(data) {
@@ -26,8 +26,6 @@ class UserRepository {
     }
   }
 
-
-
   async getById(userId){
     try {
       const user = await User.findByPk(userId , {
@@ -51,6 +49,21 @@ class UserRepository {
        console.log("Something went wrong in getting user by email", error);
        throw error;
     }
+  }
+
+
+  async idAdmin(userId){
+       const user = await User.findByPk(userId);
+       const adminRole = await Role.findOne({
+        where: {
+          name: 'ADMIN',
+        }
+       });
+
+       return user.hasRole(adminRole);
+  } catch(error){
+    console.log("Something went wrong on repository layer");
+    throw error;
   }
 
 }

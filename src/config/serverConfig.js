@@ -11,3 +11,6 @@ module.exports = {
     SALT: bcrypt.genSaltSync(10),
     JWT_KEY: process.env.JWT_KEY,
 }
+
+
+//Tokens are sent in headers in the format of Bearer <token>

@@ -41,6 +41,31 @@ class UserService {
     }
 
 
+    async isAuthenticated(token) {
+
+         try{
+            const response = this.verifyToken(token);
+            if(!response){
+              
+                throw {error: 'Invalid token'};
+            }
+
+            const user = await this.UserRepository.getById(response.id);
+
+            if(!user){
+                throw{error:'No user with corresponding token exists'};
+            }
+
+            return user.id;
+
+         }catch(error){
+            console.log("Something went wrong in auth process");
+            throw error;
+         }
+
+
+
+    }
 
 
 
@@ -84,7 +109,14 @@ class UserService {
 
 
    
-    
+    isAdmin(userId){
+        try{
+              return this.UserRepository.idAdmin(userId);
+        }catch(error){
+            console.log("Something went wrong in admin verification", error);
+            throw error;
+        }
+    }
 
 }
 
