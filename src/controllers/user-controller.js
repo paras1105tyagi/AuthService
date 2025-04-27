@@ -1,7 +1,8 @@
 const UserService = require('../services/user-service');
 
 const userService = new UserService();
-
+const error = require('../utils/error-handler');
+const StatusCodes = require('http-status-codes')
 const create = async(req,res) => {
 
     try {
@@ -19,11 +20,11 @@ const create = async(req,res) => {
     } catch (error) {
         console.log(error);
 
-        return res.status(500).json({
-         message: 'Something went wrong',
+        return res.status(error.StatusCode).json({
+         message: error.message,
          data: {},
          success: false,
-         err: error
+         err: error.explanation
         });
     }
 
@@ -40,11 +41,11 @@ const create = async(req,res) => {
             
         } catch (error) {
             console.log(error);
-            return res.status(500).json( {
-                message: 'Something went wrong',
+            return res.status(error.statusCode).json( {
+                message: error.message,
                 data: {},
                 success: false,
-                err: error
+                err: error.explanation
             })
         }
     }

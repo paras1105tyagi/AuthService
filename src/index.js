@@ -34,7 +34,7 @@ const prepareAndStartServer = () => {
       //  u1.addRole(r1);
 
 
-       const response = await u1.hasRole(r1);
+       const response = await u1.hasRole(1);
        console.log(response);
 
 
